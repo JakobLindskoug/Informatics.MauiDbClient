@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Informatics.MauiDbClient.Pages.DepartmentsPage"
+             Title="Departments">
+    <StackLayout>
+        <!-- 'Add' button at the top -->
+        <Button Text="Add Department"
+                Command="{Binding OpenAddDepartmentCommand}"
+                Margin="10"
+                HorizontalOptions="Fill" />
+
+        <!-- CollectionView for displaying the list of departments -->
+        <CollectionView x:Name="DepartmentsList"
+                        ItemsSource="{Binding Departments}"
+                        SelectionMode="Single"
+                        VerticalOptions="FillAndExpand"
+                        ItemsUpdatingScrollMode="KeepItemsInView">
+
+            <!-- Template for each department item -->
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Grid Padding="10" RowDefinitions="Auto,Auto,Auto" ColumnDefinitions="*,Auto">
+                        <!-- Department name -->
+                        <Label Grid.Row="0" Grid.Column="0"
+                               Text="{Binding Name}"
+                               FontAttributes="Bold"
+                               AutomationId="DepartmentName" />
+                        <!-- Department budget -->
+                        <Label Grid.Row="2" Grid.Column="0"
+                               Text="{Binding Budget, StringFormat='Budget: {0:C}'}"
+                               AutomationId="DepartmentBudget" />
+                        <Grid.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding Path=BindingContext.OpenDepartmentDetailsCommand, Source={x:Reference DepartmentsList}}"
+                                                CommandParameter="{Binding Name}"/>
+                        </Grid.GestureRecognizers>
+                    </Grid>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+
+            <!-- Empty view for when there are no departments -->
+            <CollectionView.EmptyView>
+                <Label Text="No departments found."
+                       HorizontalOptions="Center"
+                       VerticalOptions="Center"/>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </StackLayout>
+</ContentPage>

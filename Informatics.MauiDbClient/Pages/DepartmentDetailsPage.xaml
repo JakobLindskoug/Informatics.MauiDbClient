@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Informatics.MauiDbClient.Pages.DepartmentDetailsPage"
+             Title="Department Details">
+    <ScrollView>
+        <VerticalStackLayout Spacing="20" Padding="20">
+            <Frame CornerRadius="10" Padding="15" HasShadow="True">
+                <VerticalStackLayout Spacing="15">
+                    <Label Text="Name:" FontAttributes="Bold"/>
+                    <Entry Text="{Binding Department.Name, Mode=TwoWay}" Placeholder="Department Name"/>
+                    <Label Text="Budget:" FontAttributes="Bold"/>
+                    <Entry Text="{Binding Department.Budget, Mode=TwoWay}" Keyboard="Numeric" Placeholder="Budget"/>
+                    <!-- Assuming you want to show the count of employees in this department -->
+                    <Label Text="Number of Employees:" FontAttributes="Bold"/>
+                    <Label Text="{Binding Department.Employees.Count}"/>
+                    <!-- CollectionView for Employees -->
+                    <Label Text="Employees in Department:" FontAttributes="Bold"/>
+                    <CollectionView ItemsSource="{Binding Department.Employees}">
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Padding="10">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="Auto"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Label Grid.Column="0" Text="{Binding Name}"/>
+                                    <Label Grid.Column="1" Text="{Binding Title}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </VerticalStackLayout>
+            </Frame>
+            <Button Text="Save Changes" Command="{Binding SaveDepartmentCommand}" CornerRadius="5" />
+            <Button Text="Delete" Command="{Binding DeleteDepartmentCommand}" CornerRadius="5" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
